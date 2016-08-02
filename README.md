@@ -36,14 +36,14 @@ Roman Numeral rules:
 
 ## Stories
 
-  ***User Story:** Addition*
-     As a Roman bookkeeper
-     I want to be able to add two numbers together
-     So that I can do my work faster with fewer mathematical errors.
+  ***User Story:** Addition*    
+     As a Roman bookkeeper    
+     I want to be able to add two numbers together    
+     So that I can do my work faster with fewer mathematical errors.    
 
-  ***User Story:** Subtraction*
-     As a Roman bookkeeper
-     I want to be able to subtract a number from another
-     So that I can do my work faster and with fewer mathematical errors.
+  ***User Story:** Subtraction*    
+     As a Roman bookkeeper    
+     I want to be able to subtract a number from another    
+     So that I can do my work faster and with fewer mathematical errors.    
 
 *This Kata is based on the Roman Numeral Calculator Kata at http://bit.ly/1VfHqlj *
