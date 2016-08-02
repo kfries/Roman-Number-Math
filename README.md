@@ -1,73 +1,49 @@
-Roman Numeral Calculator
+# Roman Numeral Calculator
 
 For this Kata, you will be creating a library which will allow the addition and subtraction of
-
 Roman numerals. Once your solution is complete, please provide your solution as a Git
-
 repository (publicly available via Github or Bitbucket). Please include within your repository, all
 
-source and test code.
+## Source and test code.
 
 The solution will be reviewed for:
-
-- Test coverage
-
-- Algorithms
-
-- Code structure
-
-- Use of source control - Overall solution
+  - Test coverage
+  - Algorithms
+  - Code structure
+  - Use of source control - Overall solution
 
 The environment for this kata is the following:
-
-- Ubuntu Linux
-
-- The C programming language
-
-- GNU GCC compiler tool chain
-
-- GNU Make
-
-- Check unit testing framework ( https://libcheck.github.io/check/ )
-
-- git
+  - Ubuntu Linux
+  - The C programming language
+  - GNU GCC compiler tool chain
+  - GNU Make
+  - Check unit testing framework ( https://libcheck.github.io/check/ )
+  - git
 
 Roman Numeral rules:
 
-• Roman numerals consist of the following letters: I, V, X, L, C, D, and M which mean one,
+  • Roman numerals consist of the following letters: I, V, X, L, C, D, and M which mean one, five, ten, fifty, hundred, five hundred and one thousand respectively.
 
-five, ten, fifty, hundred, five hundred and one thousand respectively.
+  • As we are in Rome there are no such things as decimals or integers, we need to do this with the strings. An example would be "XIV" + "LX" = "LXXIV."
 
-• As we are in Rome there are no such things as decimals or integers, we need to do this
+  • Numerals can be concatenated to form a larger numeral ("XX" + "II" = "XXII").
 
-with the strings. An example would be "XIV" + "LX" = "LXXIV."
+  • If a lesser numeral is put before a bigger it means subtraction of the lesser from the bigger ("IV" means four, "CM" means ninehundred).
 
-• Numerals can be concatenated to form a larger numeral ("XX" + "II" = "XXII").
+  • If the numeral is I, X or C you can't have more than three ("II" + "II" = "IV" not “IIII”).
 
-• If a lesser numeral is put before a bigger it means subtraction of the lesser from the
+  • If the numeral is V, L or D you can't have more than one ("D" + "D" = "M" not “DD”).
 
-bigger ("IV" means four, "CM" means ninehundred).
+## Stories
 
-• If the numeral is I, X or C you can't have more than three ("II" + "II" = "IV" not “IIII”).
+  ***User Story:** Addition*
+     As a Roman bookkeeper
+     I want to be able to add two numbers together
+     So that I can do my work faster with fewer mathematical errors.
 
-• If the numeral is V, L or D you can't have more than one ("D" + "D" = "M" not “DD”).
+  ***User Story:** Subtraction*
+     As a Roman bookkeeper
+     I want to be able to subtract a number from another
+     So that I can do my work faster and with fewer mathematical errors.
 
-Stories
-
-User Story: Addition
-
-As a Roman bookkeeper
-
-I want to be able to add two numbers together
-
-So that I can do my work faster with fewer mathematical errors.
-
-User Story: Subtraction
-
-As a Roman bookkeeper
-
-I want to be able to subtract a number from another
-
-So that I can do my work faster and with fewer mathematical errors.
-
-This Kata is based on the Roman Numeral Calculator Kata at http://bit.ly/1VfHqlj
+*This Kata is based on the Roman Numeral Calculator Kata at http://bit.ly/1VfHqlj *
