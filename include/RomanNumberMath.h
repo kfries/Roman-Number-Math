@@ -17,4 +17,6 @@ RomanNumber rnEncode(char *);
 char *rnPrint(RomanNumber);
 uint32_t rnValue(RomanNumber);
 
+RomanNumber rnSortDigits(RomanNumber);
+
 #endif

@@ -75,3 +75,17 @@ uint32_t rnValue(RomanNumber number) {
 
    return returnValue;
 }
+
+RomanNumber rnSortDigits(RomanNumber number) {
+   RomanNumber returnValue;
+   int idx, idx2;
+
+   returnValue.Size = 0;
+
+   for (idx = NUMDIGITS-1; idx >= 0; idx--)
+      for (idx2 = 0; idx2 < number.Size; idx2++)
+         if (number.Digit[idx2].Symbol == allowedDigit[idx])
+            returnValue.Digit[returnValue.Size++] = number.Digit[idx2];
+   
+   return returnValue;
+}

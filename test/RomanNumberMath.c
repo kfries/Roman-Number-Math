@@ -198,7 +198,6 @@ START_TEST(create_roman_number_from_CXCIX) {
    ck_assert(number.Digit[4].Symbol == 'X');
 } END_TEST
 
-
 /*****************************************************************************
  * DISPLAY FUNCTIONS
  * 
@@ -246,9 +245,48 @@ START_TEST(display_properties_for_roman_number_CXCIX) {
    ck_assert_int_eq(rnValue(number), 199);
 } END_TEST
 
+/*****************************************************************************
+ * LIBRARY FUNCTIONS
+ * 
+ * When researching the algorithmm to do math with Roman Numbers, it game me
+ * hints to take the number and not use subtractive notation, having to sort
+ * the symbols, etc.
+ *
+ ****************************************************************************/
+
+/* Sort a simple one character number value *********************************/
+START_TEST(sort_a_single_digit_value) {
+   RomanNumber number = rnEncode("V");
+   ck_assert_str_eq(rnPrint(rnSortDigits(number)), "V");
+} END_TEST
+
+/* Sort a simple two character number ***************************************/
+START_TEST(sort_a_two_digit_value) {
+   RomanNumber number = rnEncode("XX");
+   ck_assert_str_eq(rnPrint(rnSortDigits(number)), "XX");
+} END_TEST
+
+/* Sort a three character value with some values out of oder ****************/
+START_TEST(sort_a_number_with_digits_out_of_order) {
+   RomanNumber number = rnEncode("LIX");
+   ck_assert_str_eq(rnPrint(rnSortDigits(number)), "LXI");
+} END_TEST
+
+/* Sort a four digit number with multiple digits out of order ***************/
+START_TEST(sort_a_number_with_multiple_digits_out_of_order) {
+   RomanNumber number = rnEncode("XCIX");
+   ck_assert_str_eq(rnPrint(rnSortDigits(number)), "CXXI");
+} END_TEST
+
+/* Sort a five digit number with multiple digits out of order ***************/
+START_TEST(sort_a_number_with_multiple_digits_out_of_order_after_first) {
+   RomanNumber number = rnEncode("CXCIX");
+   ck_assert_str_eq(rnPrint(rnSortDigits(number)), "CCXXI");
+} END_TEST
+
 Suite * roman_number_math_suite(void) {
    Suite *s;
-   TCase *tc_digits, *tc_numbers;
+   TCase *tc_digits, *tc_numbers, *tc_library;
 
    s = suite_create("RomanNumberMath");
 
@@ -275,7 +313,7 @@ Suite * roman_number_math_suite(void) {
 
    suite_add_tcase(s, tc_digits);
 
-   /* Testing Creating of Roman Digits */
+   /* Testing Creating of Roman Numbers */
    tc_numbers = tcase_create("RomanNumbers");
 
    tcase_add_test(tc_numbers, create_roman_number_from_I);
@@ -291,6 +329,16 @@ Suite * roman_number_math_suite(void) {
    tcase_add_test(tc_numbers, display_properties_for_roman_number_CXCIX);
 
    suite_add_tcase(s, tc_numbers);
+
+   /* Testing Library Functions (algoritm steps) */
+   tc_library = tcase_create("Library");
+   tcase_add_test(tc_library, sort_a_single_digit_value);
+   tcase_add_test(tc_library, sort_a_two_digit_value);
+   tcase_add_test(tc_library, sort_a_number_with_digits_out_of_order);
+   tcase_add_test(tc_library, sort_a_number_with_multiple_digits_out_of_order);
+   tcase_add_test(tc_library, sort_a_number_with_multiple_digits_out_of_order_after_first);
+
+   suite_add_tcase(s, tc_library);
 
    return s;
 }
