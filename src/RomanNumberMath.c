@@ -8,8 +8,9 @@
 
 #define NUMDIGITS 7
 
-char allowedDigit[NUMDIGITS] = {'I', 'V', 'X', 'L', 'C', 'D', 'M'};
-int digitValue[NUMDIGITS] = {1, 5, 10, 50, 100, 500, 1000};
+char allowedDigit[NUMDIGITS] = {'I', 'V', 'X', 'L', 'C', 'D',  'M'  };
+int  digitValue[NUMDIGITS]   = { 1,   5,   10,  50, 100, 500,  1000 };
+int  nextDigit[NUMDIGITS]    = { 5,   2,   5,   2,   5,   2,  99999 };
 
 RomanDigit rdEncode(char digit) {
    int idx;
@@ -127,6 +128,42 @@ RomanNumber rnRemoveSubtractiveNotation(RomanNumber number) {
          }
 
          idx += 2;
+      }
+   }
+
+   return returnValue;
+}
+
+RomanNumber rnSimplifyDigits(RomanNumber number) {
+   RomanNumber returnValue;
+   int counts[NUMDIGITS];
+   int idx, idx2;
+
+   returnValue.Size = 0;
+
+   for (idx = 0; idx < NUMDIGITS; idx++) {
+      counts[idx] = 0;
+
+      for (idx2 = 0; idx2 < number.Size; idx2++)
+         if (number.Digit[idx2].Symbol == allowedDigit[idx])
+            counts[idx]++;
+   }
+
+   for (idx = 0; idx < NUMDIGITS; idx++) {
+      while (counts[idx] >= nextDigit[idx]) {
+         counts[idx] -= nextDigit[idx];
+         counts[idx+1]++;
+      }
+   }
+
+   for (idx = NUMDIGITS-1; idx >= 0; idx--) {
+      while (counts[idx]) {
+         RomanDigit digit;
+         digit.Symbol = allowedDigit[idx];
+         digit.Value = digitValue[idx];
+
+         returnValue.Digit[returnValue.Size++] = digit;
+         counts[idx]--;
       }
    }
 

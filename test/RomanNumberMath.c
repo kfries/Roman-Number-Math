@@ -328,6 +328,54 @@ START_TEST(remove_subtractive_notation_mixed_values) {
    ck_assert_str_eq(rnPrint(rnRemoveSubtractiveNotation(number)), "CLXXXXVIIII");
 } END_TEST
 
+/****************************************************************************/
+START_TEST(simplify_value_single_digit) {
+   RomanNumber number = rnEncode("I");
+   ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "I");
+} END_TEST
+
+/****************************************************************************/
+START_TEST(simplify_value_five_ones_equals_five) {
+   RomanNumber number = rnEncode("IIIII");
+   ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "V");
+} END_TEST
+
+/****************************************************************************/
+START_TEST(simplify_value_two_fives_equals_ten) {
+   RomanNumber number = rnEncode("VV");
+   ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "X");
+} END_TEST
+
+/****************************************************************************/
+START_TEST(simplify_value_five_tens_equals_fifty) {
+   RomanNumber number = rnEncode("XXXXX");
+   ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "L");
+} END_TEST
+
+/****************************************************************************/
+START_TEST(simplify_value_two_fifty_equals_one_hundred) {
+   RomanNumber number = rnEncode("LL");
+   ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "C");
+} END_TEST
+
+/****************************************************************************/
+START_TEST(simplify_value_five_one_hundred_equals_five_hundred) {
+   RomanNumber number = rnEncode("CCCCC");
+   ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "D");
+} END_TEST
+
+/****************************************************************************/
+START_TEST(simplify_value_two_five_hundred_equals_one_thousand) {
+   RomanNumber number = rnEncode("DD");
+   ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "M");
+} END_TEST
+
+/****************************************************************************/
+START_TEST(simplify_value_complex_value) {
+   RomanNumber number = rnEncode("MMDDLLVII");
+   ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "MMMCVII");
+} END_TEST
+
 Suite * roman_number_math_suite(void) {
    Suite *s;
    TCase *tc_digits, *tc_numbers, *tc_library;
@@ -390,6 +438,15 @@ Suite * roman_number_math_suite(void) {
    tcase_add_test(tc_library, remove_subtractive_notation_multi_digit_single_change);
    tcase_add_test(tc_library, remove_subtractive_notation_multi_digit_multiple_changes);
    tcase_add_test(tc_library, remove_subtractive_notation_mixed_values);
+
+   tcase_add_test(tc_library, simplify_value_single_digit);
+   tcase_add_test(tc_library, simplify_value_five_ones_equals_five);
+   tcase_add_test(tc_library, simplify_value_two_fives_equals_ten);
+   tcase_add_test(tc_library, simplify_value_five_tens_equals_fifty);
+   tcase_add_test(tc_library, simplify_value_two_fifty_equals_one_hundred);
+   tcase_add_test(tc_library, simplify_value_five_one_hundred_equals_five_hundred);
+   tcase_add_test(tc_library, simplify_value_two_five_hundred_equals_one_thousand);
+   tcase_add_test(tc_library, simplify_value_complex_value);
 
    suite_add_tcase(s, tc_library);
 
