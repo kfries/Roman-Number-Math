@@ -104,3 +104,31 @@ RomanNumber rnConcatinate(RomanNumber number1, RomanNumber number2) {
 
    return returnValue;
 }
+
+RomanNumber rnRemoveSubtractiveNotation(RomanNumber number) {
+   RomanNumber returnValue;
+   int idx, idx2;
+
+   returnValue.Size = 0;
+
+   idx = 0;
+   while(idx < number.Size) {
+      if (number.Digit[idx].Value > 0) {
+         returnValue.Digit[returnValue.Size++] = number.Digit[idx++];
+      } else {
+         int targetValue = number.Digit[idx+1].Value + number.Digit[idx].Value;
+
+         for (idx2 = NUMDIGITS-1; idx2 >= 0; idx2--) {
+            while (targetValue >= digitValue[idx2]) {
+               returnValue.Digit[returnValue.Size].Symbol = allowedDigit[idx2];
+               returnValue.Digit[returnValue.Size++].Value = digitValue[idx2];
+               targetValue -= digitValue[idx2];
+            }
+         }
+
+         idx += 2;
+      }
+   }
+
+   return returnValue;
+}

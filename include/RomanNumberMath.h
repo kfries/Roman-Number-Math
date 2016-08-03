@@ -19,5 +19,6 @@ uint32_t rnValue(RomanNumber);
 
 RomanNumber rnSortDigits(RomanNumber);
 RomanNumber rnConcatinate(RomanNumber, RomanNumber);
+RomanNumber rnRemoveSubtractiveNotation(RomanNumber);
 
 #endif

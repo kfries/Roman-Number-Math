@@ -298,6 +298,36 @@ START_TEST(concatinate_two_multidigit_values) {
    ck_assert_str_eq(rnPrint(rnConcatinate(number1, number2)), "XVVIII");
 } END_TEST
 
+/************ Remove Subtractive Notation from Single Digit Value ***********/
+START_TEST(remove_subtractive_notation_single_digit) {
+   RomanNumber number = rnEncode("V");
+   ck_assert_str_eq(rnPrint(rnRemoveSubtractiveNotation(number)), "V");
+} END_TEST
+
+/************* Remove Subtractive Notation from MultiDigit Value ************/
+START_TEST(remove_subtractive_notation_multi_digit) {
+   RomanNumber number = rnEncode("XX");
+   ck_assert_str_eq(rnPrint(rnRemoveSubtractiveNotation(number)), "XX");
+} END_TEST
+
+/***** Remove Subtractive Notation from MultiDigit Value, Single Change *****/
+START_TEST(remove_subtractive_notation_multi_digit_single_change) {
+   RomanNumber number = rnEncode("LIX");
+   ck_assert_str_eq(rnPrint(rnRemoveSubtractiveNotation(number)), "LVIIII");
+} END_TEST
+
+/**** Remove Subtractive Notation from MultiDigit Value, Multiple Changes ***/
+START_TEST(remove_subtractive_notation_multi_digit_multiple_changes) {
+   RomanNumber number = rnEncode("XCIX");
+   ck_assert_str_eq(rnPrint(rnRemoveSubtractiveNotation(number)), "LXXXXVIIII");
+} END_TEST
+
+/****** Remove Subtractive Notation from MultiDigit Value, Mixed Values *****/
+START_TEST(remove_subtractive_notation_mixed_values) {
+   RomanNumber number = rnEncode("CXCIX");
+   ck_assert_str_eq(rnPrint(rnRemoveSubtractiveNotation(number)), "CLXXXXVIIII");
+} END_TEST
+
 Suite * roman_number_math_suite(void) {
    Suite *s;
    TCase *tc_digits, *tc_numbers, *tc_library;
@@ -351,8 +381,15 @@ Suite * roman_number_math_suite(void) {
    tcase_add_test(tc_library, sort_a_number_with_digits_out_of_order);
    tcase_add_test(tc_library, sort_a_number_with_multiple_digits_out_of_order);
    tcase_add_test(tc_library, sort_a_number_with_multiple_digits_out_of_order_after_first);
+
    tcase_add_test(tc_library, concatinate_two_single_digit_numbers);
    tcase_add_test(tc_library, concatinate_two_multidigit_values);
+
+   tcase_add_test(tc_library, remove_subtractive_notation_single_digit);
+   tcase_add_test(tc_library, remove_subtractive_notation_multi_digit);
+   tcase_add_test(tc_library, remove_subtractive_notation_multi_digit_single_change);
+   tcase_add_test(tc_library, remove_subtractive_notation_multi_digit_multiple_changes);
+   tcase_add_test(tc_library, remove_subtractive_notation_mixed_values);
 
    suite_add_tcase(s, tc_library);
 
