@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdint.h>
 
 #include "RomanNumberMath.h"
 
@@ -52,4 +54,24 @@ RomanNumber rnEncode(char *rnumber) {
 
    return returnValue;
 
+}
+
+char *rnPrint(RomanNumber number) {
+   int idx;
+   char *returnValue = (char *)malloc(number.Size+1);
+   returnValue[number.Size] = '\0';
+
+   for (idx = 0; idx < number.Size; idx++)
+      returnValue[idx] = number.Digit[idx].Symbol;
+
+   return returnValue;
+}
+
+uint32_t rnValue(RomanNumber number) {
+   int idx;
+   uint32_t returnValue = 0;
+
+   for (idx = 0; idx < number.Size; idx++) returnValue += number.Digit[idx].Value;
+
+   return returnValue;
 }

@@ -13,4 +13,8 @@ typedef struct {
 
 RomanDigit rdEncode(char);
 RomanNumber rnEncode(char *);
+
+char *rnPrint(RomanNumber);
+uint32_t rnValue(RomanNumber);
+
 #endif

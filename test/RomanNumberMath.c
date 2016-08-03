@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <stdlib.h>
 #include <check.h>
 
@@ -197,6 +198,54 @@ START_TEST(create_roman_number_from_CXCIX) {
    ck_assert(number.Digit[4].Symbol == 'X');
 } END_TEST
 
+
+/*****************************************************************************
+ * DISPLAY FUNCTIONS
+ * 
+ * These tests allow for printing of the Number, or Obtaining its value
+ *
+ ****************************************************************************/
+
+/********* A Roman Number of V should display as V and have value 5 *********/
+START_TEST(display_properties_for_roman_number_V) {
+   RomanNumber number = rnEncode("I");
+
+   ck_assert_str_eq(rnPrint(number), "I");
+   ck_assert_int_eq(rnValue(number), 1);
+} END_TEST
+
+/******** A Roman Number of XX should display as V and have value 20 ********/
+START_TEST(display_properties_for_roman_number_XX) {
+   RomanNumber number = rnEncode("XX");
+
+   ck_assert_str_eq(rnPrint(number), "XX");
+   ck_assert_int_eq(rnValue(number), 20);
+} END_TEST
+
+/******* A Roman Number of LIX should display as V and have value 59 ********/
+START_TEST(display_properties_for_roman_number_LIX) {
+   RomanNumber number = rnEncode("LIX");
+
+   ck_assert_str_eq(rnPrint(number), "LIX");
+   ck_assert_int_eq(rnValue(number), 59);
+} END_TEST
+
+/******* A Roman Number of XCIX should display as V and have value 99 *******/
+START_TEST(display_properties_for_roman_number_XCIX) {
+   RomanNumber number = rnEncode("XCIX");
+
+   ck_assert_str_eq(rnPrint(number), "XCIX");
+   ck_assert_int_eq(rnValue(number), 99);
+} END_TEST
+
+/****** A Roman Number of CXCIX should display as V and have value 199 ******/
+START_TEST(display_properties_for_roman_number_CXCIX) {
+   RomanNumber number = rnEncode("CXCIX");
+
+   ck_assert_str_eq(rnPrint(number), "CXCIX");
+   ck_assert_int_eq(rnValue(number), 199);
+} END_TEST
+
 Suite * roman_number_math_suite(void) {
    Suite *s;
    TCase *tc_digits, *tc_numbers;
@@ -226,6 +275,7 @@ Suite * roman_number_math_suite(void) {
 
    suite_add_tcase(s, tc_digits);
 
+   /* Testing Creating of Roman Digits */
    tc_numbers = tcase_create("RomanNumbers");
 
    tcase_add_test(tc_numbers, create_roman_number_from_I);
@@ -233,6 +283,12 @@ Suite * roman_number_math_suite(void) {
    tcase_add_test(tc_numbers, create_roman_number_from_LIC);
    tcase_add_test(tc_numbers, create_roman_number_from_XCIX);
    tcase_add_test(tc_numbers, create_roman_number_from_CXCIX);
+
+   tcase_add_test(tc_numbers, display_properties_for_roman_number_V);
+   tcase_add_test(tc_numbers, display_properties_for_roman_number_XX);
+   tcase_add_test(tc_numbers, display_properties_for_roman_number_LIX);
+   tcase_add_test(tc_numbers, display_properties_for_roman_number_XCIX);
+   tcase_add_test(tc_numbers, display_properties_for_roman_number_CXCIX);
 
    suite_add_tcase(s, tc_numbers);
 
