@@ -254,34 +254,48 @@ START_TEST(display_properties_for_roman_number_CXCIX) {
  *
  ****************************************************************************/
 
-/* Sort a simple one character number value *********************************/
+/***************** Sort a simple one character number value *****************/
 START_TEST(sort_a_single_digit_value) {
    RomanNumber number = rnEncode("V");
    ck_assert_str_eq(rnPrint(rnSortDigits(number)), "V");
 } END_TEST
 
-/* Sort a simple two character number ***************************************/
+/******************** Sort a simple two character number ********************/
 START_TEST(sort_a_two_digit_value) {
    RomanNumber number = rnEncode("XX");
    ck_assert_str_eq(rnPrint(rnSortDigits(number)), "XX");
 } END_TEST
 
-/* Sort a three character value with some values out of oder ****************/
+/********* Sort a three character value with some values out of oder ********/
 START_TEST(sort_a_number_with_digits_out_of_order) {
    RomanNumber number = rnEncode("LIX");
    ck_assert_str_eq(rnPrint(rnSortDigits(number)), "LXI");
 } END_TEST
 
-/* Sort a four digit number with multiple digits out of order ***************/
+/******** Sort a four digit number with multiple digits out of order ********/
 START_TEST(sort_a_number_with_multiple_digits_out_of_order) {
    RomanNumber number = rnEncode("XCIX");
    ck_assert_str_eq(rnPrint(rnSortDigits(number)), "CXXI");
 } END_TEST
 
-/* Sort a five digit number with multiple digits out of order ***************/
+/******** Sort a five digit number with multiple digits out of order ********/
 START_TEST(sort_a_number_with_multiple_digits_out_of_order_after_first) {
    RomanNumber number = rnEncode("CXCIX");
    ck_assert_str_eq(rnPrint(rnSortDigits(number)), "CCXXI");
+} END_TEST
+
+/********** Concatinate Two Single Digit Values into a Single Value *********/
+START_TEST(concatinate_two_single_digit_numbers) {
+   RomanNumber number1 = rnEncode("X");
+   RomanNumber number2 = rnEncode("V");
+   ck_assert_str_eq(rnPrint(rnConcatinate(number1, number2)), "XV");
+} END_TEST
+
+/************** Sort two Multi-Digit Values into a Single Value *************/
+START_TEST(concatinate_two_multidigit_values) {
+   RomanNumber number1 = rnEncode("XV");
+   RomanNumber number2 = rnEncode("VIII");
+   ck_assert_str_eq(rnPrint(rnConcatinate(number1, number2)), "XVVIII");
 } END_TEST
 
 Suite * roman_number_math_suite(void) {
@@ -337,6 +351,8 @@ Suite * roman_number_math_suite(void) {
    tcase_add_test(tc_library, sort_a_number_with_digits_out_of_order);
    tcase_add_test(tc_library, sort_a_number_with_multiple_digits_out_of_order);
    tcase_add_test(tc_library, sort_a_number_with_multiple_digits_out_of_order_after_first);
+   tcase_add_test(tc_library, concatinate_two_single_digit_numbers);
+   tcase_add_test(tc_library, concatinate_two_multidigit_values);
 
    suite_add_tcase(s, tc_library);
 

@@ -89,3 +89,18 @@ RomanNumber rnSortDigits(RomanNumber number) {
    
    return returnValue;
 }
+
+RomanNumber rnConcatinate(RomanNumber number1, RomanNumber number2) {
+   RomanNumber returnValue;
+   int idx;
+
+   returnValue.Size = number1.Size + number2.Size;
+
+   for (idx = 0; idx < number1.Size; idx++)
+      returnValue.Digit[idx] = number1.Digit[idx];
+
+   for (idx = 0; idx < number2.Size; idx++)
+      returnValue.Digit[number1.Size + idx] = number2.Digit[idx];
+
+   return returnValue;
+}
