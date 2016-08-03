@@ -139,9 +139,67 @@ START_TEST(create_roman_digit_from_letter_m) {
    ck_assert(digit.Value == 1000);
 } END_TEST
 
+
+/*****************************************************************************
+ * ROMAN NUMBERS
+ * 
+ * These tests use the Roman Digits internally to create a full Romann Number
+ *
+ ****************************************************************************/
+
+/******************* Create a Roman Number from string I ********************/
+START_TEST(create_roman_number_from_I) {
+   RomanNumber number = rnEncode("I");
+
+   ck_assert(number.Size == 1);
+   ck_assert(number.Digit[0].Symbol == 'I');
+} END_TEST
+
+/****************** Create a Roman Number from string XX ********************/
+START_TEST(create_roman_number_from_XX) {
+   RomanNumber number = rnEncode("XX");
+
+   ck_assert(number.Size == 2);
+   ck_assert(number.Digit[0].Symbol == 'X');
+   ck_assert(number.Digit[1].Symbol == 'X');
+} END_TEST
+
+/****************** Create a Roman Number from string LIC *******************/
+START_TEST(create_roman_number_from_LIC) {
+   RomanNumber number = rnEncode("LIC");
+
+   ck_assert(number.Size == 3);
+   ck_assert(number.Digit[0].Symbol == 'L');
+   ck_assert(number.Digit[1].Symbol == 'I');
+   ck_assert(number.Digit[2].Symbol == 'C');
+} END_TEST
+
+/***************** Create a Roman Number from string XCIX *******************/
+START_TEST(create_roman_number_from_XCIX) {
+   RomanNumber number = rnEncode("XCIX");
+
+   ck_assert(number.Size == 4);
+   ck_assert(number.Digit[0].Symbol == 'X');
+   ck_assert(number.Digit[1].Symbol == 'C');
+   ck_assert(number.Digit[2].Symbol == 'I');
+   ck_assert(number.Digit[3].Symbol == 'X');
+} END_TEST
+
+/***************** Create a Roman Number from string CXCIX ******************/
+START_TEST(create_roman_number_from_CXCIX) {
+   RomanNumber number = rnEncode("CXCIX");
+
+   ck_assert(number.Size == 5);
+   ck_assert(number.Digit[0].Symbol == 'C');
+   ck_assert(number.Digit[1].Symbol == 'X');
+   ck_assert(number.Digit[2].Symbol == 'C');
+   ck_assert(number.Digit[3].Symbol == 'I');
+   ck_assert(number.Digit[4].Symbol == 'X');
+} END_TEST
+
 Suite * roman_number_math_suite(void) {
    Suite *s;
-   TCase *tc_digits;
+   TCase *tc_digits, *tc_numbers;
 
    s = suite_create("RomanNumberMath");
 
@@ -167,6 +225,16 @@ Suite * roman_number_math_suite(void) {
    tcase_add_test(tc_digits, create_roman_digit_from_letter_m);
 
    suite_add_tcase(s, tc_digits);
+
+   tc_numbers = tcase_create("RomanNumbers");
+
+   tcase_add_test(tc_numbers, create_roman_number_from_I);
+   tcase_add_test(tc_numbers, create_roman_number_from_XX);
+   tcase_add_test(tc_numbers, create_roman_number_from_LIC);
+   tcase_add_test(tc_numbers, create_roman_number_from_XCIX);
+   tcase_add_test(tc_numbers, create_roman_number_from_CXCIX);
+
+   suite_add_tcase(s, tc_numbers);
 
    return s;
 }
