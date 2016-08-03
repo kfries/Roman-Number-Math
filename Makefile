@@ -19,7 +19,7 @@ lib/libRomanNumberMathDebug.so: obj/RomanNumberMathDebug.o
 	$(CC) --shared -o $@ $^
 
 bin/RomanNumberMathTest: obj/tests.o lib/libRomanNumberMathDebug.so
-	$(CC) -o $@ $< $(shell pkg-config --libs check) $(LIBS) -lRomanNumberMathDebug 
+	$(CC) -o $@ $< $(shell pkg-config --libs check) $(LIBS) -lRomanNumberMathDebug -Wl,-rpath,./lib
 
 obj/RomanNumberMath.o: src/RomanNumberMath.c
 	$(CC) -c -fPIC $(CFLAGS) -o $@ $^
@@ -28,4 +28,5 @@ obj/RomanNumberMathDebug.o: src/RomanNumberMath.c
 	$(CC) -c -g -fPIC $(CFLAGS) -o $@ $^
 
 obj/tests.o: test/RomanNumberMath.c
-	$(CC) -c -g $(CFLAGS) $(shell pkg-config --cflags check) -o $@ $^
+	$(CC) -c -g $(CFLAGS) $(shell pkg-config --cflags check) -o $@ $(LIBS) $^
+
