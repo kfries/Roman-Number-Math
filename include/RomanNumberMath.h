@@ -28,5 +28,6 @@ RomanNumber rnConcatinate(RomanNumber, RomanNumber);
 RomanNumber rnRemoveSubtractiveNotation(RomanNumber);
 RomanNumber rnSimplifyDigits(RomanNumber);
 RomanNumber rnConvertToSubtractiveNotation(RomanNumber);
+void rnRemoveCommonDigits(RomanNumber *, RomanNumber *);
 
 #endif

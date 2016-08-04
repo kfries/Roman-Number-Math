@@ -424,6 +424,47 @@ START_TEST(convert_to_subtractive_notation_complex_value) {
    ck_assert_str_eq(rnPrint(rnConvertToSubtractiveNotation(number)), "CMXCIX");
 } END_TEST
 
+/**************** Remove Common Digits: two identical numbers ***************/
+START_TEST(remove_common_digits_from_two_identical_numbers) {
+   RomanNumber number1 = rnEncode("I");
+   RomanNumber number2 = rnEncode("I");
+
+   rnRemoveCommonDigits(&number1, &number2);
+   ck_assert_str_eq(rnPrint(number1), "");
+   ck_assert_str_eq(rnPrint(number2), "");
+} END_TEST
+
+/******* Remove Common Digits: all of seconds digits included in first ******/
+START_TEST(remove_common_digits_where_second_included_in_first) {
+   RomanNumber number1 = rnEncode("III");
+   RomanNumber number2 = rnEncode("II");
+
+   rnRemoveCommonDigits(&number1, &number2);
+   ck_assert_str_eq(rnPrint(number1), "I");
+   ck_assert_str_eq(rnPrint(number2), "");
+} END_TEST
+
+/*** Remove Common Digits: second digits only parcially included in first ***/
+START_TEST(remove_common_digits_where_second_partly_in_first) {
+   RomanNumber number1 = rnEncode("VI");
+   RomanNumber number2 = rnEncode("II");
+
+   rnRemoveCommonDigits(&number1, &number2);
+   ck_assert_str_eq(rnPrint(number1), "V");
+   ck_assert_str_eq(rnPrint(number2), "I");
+} END_TEST
+
+/****** Remove Common Digits: none of seconds digits included in first ******/
+START_TEST(remove_common_digits_where_no_digits_in_common) {
+   RomanNumber number1 = rnEncode("LX");
+   RomanNumber number2 = rnEncode("VI");
+
+   rnRemoveCommonDigits(&number1, &number2);
+   ck_assert_str_eq(rnPrint(number1), "LX");
+   ck_assert_str_eq(rnPrint(number2), "VI");
+} END_TEST
+
+
 /*****************************************************************************
  * Main Function Calls (Core)
  * 
@@ -431,21 +472,21 @@ START_TEST(convert_to_subtractive_notation_complex_value) {
  *
  ****************************************************************************/
 
-/****************************************************************************/
+/************************** Add I + I = II (1+1=2) **************************/
 START_TEST(one_plus_one_equals_two) {
    RomanNumber number1 = rnEncode("I");
    RomanNumber number2 = rnEncode("I");
    ck_assert_str_eq(rnPrint(rnAdd(number1, number2)), "I");
 } END_TEST
 
-/****************************************************************************/
+/************************* Add II + II = IV (2+2+4) *************************/
 START_TEST(two_plus_two_equals_four) {
    RomanNumber number1 = rnEncode("II");
    RomanNumber number2 = rnEncode("II");
    ck_assert_str_eq(rnPrint(rnAdd(number1, number2)), "IV");
 } END_TEST
 
-/****************************************************************************/
+/********************** Add XLVI + LIV = C (46+54=100) **********************/
 START_TEST(add_two_complex_numbers) {
    RomanNumber number1 = rnEncode("XLVI");
    RomanNumber number2 = rnEncode("LIV");
@@ -533,6 +574,11 @@ Suite * roman_number_math_suite(void) {
    tcase_add_test(tc_library, convert_to_subtractive_notation_nine_hundred);
    tcase_add_test(tc_library, convert_to_subtractive_notation_four_hundred);
    tcase_add_test(tc_library, convert_to_subtractive_notation_complex_value);
+
+   tcase_add_test(tc_library, remove_common_digits_from_two_identical_numbers);
+   tcase_add_test(tc_library, remove_common_digits_where_second_included_in_first);
+   tcase_add_test(tc_library, remove_common_digits_where_second_partly_in_first);
+   tcase_add_test(tc_library, remove_common_digits_where_no_digits_in_common);
 
    suite_add_tcase(s, tc_library);
 

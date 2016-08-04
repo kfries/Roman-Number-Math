@@ -232,3 +232,33 @@ RomanNumber rnAdd(RomanNumber number1, RomanNumber number2) {
              )
           );
 }
+
+void rnRemoveCommonDigits(RomanNumber *number1, RomanNumber *number2) {
+   int fidx, sidx;
+
+   sidx = 0;
+   while(sidx < number2->Size) {
+      fidx = 0;
+      while(fidx < number1->Size) {
+         if (number1->Digit[fidx].Symbol == number2->Digit[sidx].Symbol) {
+            int idx;
+
+            number1->Size--;
+            for (idx = fidx; idx < number1->Size; idx++)
+               number1->Digit[idx] = number1->Digit[idx+1];
+
+            number2->Size--;
+            for (idx = sidx; idx < number2->Size; idx++)
+               number2->Digit[idx] = number2->Digit[idx+1];
+
+            sidx--;
+            break;
+         } else {
+            fidx++;
+         }
+      }
+
+      sidx++;
+   }
+}
+
