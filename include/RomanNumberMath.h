@@ -17,6 +17,7 @@ RomanNumber rnEncode(char *);
 
 /* Core Mathmatical Functions */
 RomanNumber rnAdd(RomanNumber, RomanNumber);
+RomanNumber rnSubtract(RomanNumber, RomanNumber);
 
 /* Debugging and Validation Helper Functions */
 char *rnPrint(RomanNumber);

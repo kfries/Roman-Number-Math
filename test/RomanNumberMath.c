@@ -504,7 +504,7 @@ START_TEST(expand_symbol_with_extra_digits_on_both_ends) {
 START_TEST(one_plus_one_equals_two) {
    RomanNumber number1 = rnEncode("I");
    RomanNumber number2 = rnEncode("I");
-   ck_assert_str_eq(rnPrint(rnAdd(number1, number2)), "I");
+   ck_assert_str_eq(rnPrint(rnAdd(number1, number2)), "II");
 } END_TEST
 
 /************************* Add II + II = IV (2+2+4) *************************/
@@ -521,7 +521,27 @@ START_TEST(add_two_complex_numbers) {
    ck_assert_str_eq(rnPrint(rnAdd(number1, number2)), "C");
 } END_TEST
 
-/****************************************************************************/
+/************************ Subtract X - V = V (10-5=5) ***********************/
+START_TEST(subtract_two_simple_numbers) {
+   RomanNumber number1 = rnEncode("X");
+   RomanNumber number2 = rnEncode("V");
+   ck_assert_str_eq(rnPrint(rnSubtract(number1, number2)), "V");
+} END_TEST
+
+/*********************** Subtract X - I = IX (10-1=9) ***********************/
+START_TEST(subtract_two_numbers_leaving_subtractive_notation_result) {
+   RomanNumber number1 = rnEncode("X");
+   RomanNumber number2 = rnEncode("I");
+   ck_assert_str_eq(rnPrint(rnSubtract(number1, number2)), "IX");
+} END_TEST
+
+/******************* Subtract LII - XXII = XXX (52-22=30) *******************/
+START_TEST(subtract_two_more_complex_number) {
+   RomanNumber number1 = rnEncode("LII");
+   RomanNumber number2 = rnEncode("XXII");
+   ck_assert_str_eq(rnPrint(rnSubtract(number1, number2)), "XXX");
+} END_TEST
+
 Suite * roman_number_math_suite(void) {
    Suite *s;
    TCase *tc_digits, *tc_numbers, *tc_library, *tc_core;
@@ -622,6 +642,12 @@ Suite * roman_number_math_suite(void) {
    tcase_add_test(tc_core, two_plus_two_equals_four);
    tcase_add_test(tc_core, add_two_complex_numbers);
 
+   tcase_add_test(tc_core, subtract_two_simple_numbers);
+   tcase_add_test(tc_core, subtract_two_numbers_leaving_subtractive_notation_result);
+   tcase_add_test(tc_core, subtract_two_more_complex_number);
+
+   suite_add_tcase(s, tc_core);
+
    return s;
 }
 
@@ -638,3 +664,4 @@ int main(int argc, char *argv[]) {
    srunner_free(sr);
    return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
+

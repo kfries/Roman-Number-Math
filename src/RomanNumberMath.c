@@ -301,3 +301,16 @@ RomanNumber rnExpandValue(RomanNumber number1, RomanNumber number2) {
 
    return rnSortDigits(rnConcatinate(strippedFirstNumber, replacementNumber));
 }
+
+RomanNumber rnSubtract(RomanNumber number1, RomanNumber number2) {
+   number1 = rnRemoveSubtractiveNotation(number1);
+   number2 = rnRemoveSubtractiveNotation(number2);
+
+   rnRemoveCommonDigits(&number1, &number2);
+   while (number2.Size > 0) {
+      number1 = rnExpandValue(number1, number2);
+      rnRemoveCommonDigits(&number1, &number2);
+   }
+
+   return rnConvertToSubtractiveNotation(number1);
+}
