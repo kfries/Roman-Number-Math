@@ -328,54 +328,103 @@ START_TEST(remove_subtractive_notation_mixed_values) {
    ck_assert_str_eq(rnPrint(rnRemoveSubtractiveNotation(number)), "CLXXXXVIIII");
 } END_TEST
 
-/****************************************************************************/
+/******** Simply Roman Number with only One digit (return value only) *******/
 START_TEST(simplify_value_single_digit) {
    RomanNumber number = rnEncode("I");
    ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "I");
 } END_TEST
 
-/****************************************************************************/
+/************** Simplify value with five ones into a single five ************/
 START_TEST(simplify_value_five_ones_equals_five) {
    RomanNumber number = rnEncode("IIIII");
    ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "V");
 } END_TEST
 
-/****************************************************************************/
+/************* Simplify a value with two fives into a single ten ************/
 START_TEST(simplify_value_two_fives_equals_ten) {
    RomanNumber number = rnEncode("VV");
    ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "X");
 } END_TEST
 
-/****************************************************************************/
+/************ Simplify a value with five tens into a single fifty ***********/
 START_TEST(simplify_value_five_tens_equals_fifty) {
    RomanNumber number = rnEncode("XXXXX");
    ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "L");
 } END_TEST
 
-/****************************************************************************/
+/********** Simplify a single value with two fifties into a hundred *********/
 START_TEST(simplify_value_two_fifty_equals_one_hundred) {
    RomanNumber number = rnEncode("LL");
    ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "C");
 } END_TEST
 
-/****************************************************************************/
+/**** Simplify a value with five one hundreds into a single five hundred ****/
 START_TEST(simplify_value_five_one_hundred_equals_five_hundred) {
    RomanNumber number = rnEncode("CCCCC");
    ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "D");
 } END_TEST
 
-/****************************************************************************/
+/**** Simplify a value with two five hundreds into a single one thousand ****/
 START_TEST(simplify_value_two_five_hundred_equals_one_thousand) {
    RomanNumber number = rnEncode("DD");
    ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "M");
 } END_TEST
 
-/****************************************************************************/
+/******** Combine several elements above into a single simplification *******/
 START_TEST(simplify_value_complex_value) {
    RomanNumber number = rnEncode("MMDDLLVII");
    ck_assert_str_eq(rnPrint(rnSimplifyDigits(number)), "MMMCVII");
 } END_TEST
 
+/********** Converting a single digit should just return that digit *********/
+START_TEST(convert_to_subtractive_notation_single_digit) {
+   RomanNumber number = rnEncode("I");
+   ck_assert_str_eq(rnPrint(rnConvertToSubtractiveNotation(number)), "I");
+} END_TEST
+
+/*********** Convert a value with a five and four ones into a nine **********/
+START_TEST(convert_to_subtractive_notation_nine) {
+   RomanNumber number = rnEncode("VIIII");
+   ck_assert_str_eq(rnPrint(rnConvertToSubtractiveNotation(number)), "IX");
+} END_TEST
+
+/**************** Convert a value with four ones into a four ****************/
+START_TEST(convert_to_subtractive_notation_four) {
+   RomanNumber number = rnEncode("XIIII");
+   ck_assert_str_eq(rnPrint(rnConvertToSubtractiveNotation(number)), "XIV");
+} END_TEST
+
+/********* Convert a value with a fifty and four tens into a ninety *********/
+START_TEST(convert_to_subtractive_notation_ninety) {
+   RomanNumber number = rnEncode("CLXXXXVII");
+   ck_assert_str_eq(rnPrint(rnConvertToSubtractiveNotation(number)), "CXCVII");
+} END_TEST
+
+/*************** Convert a value with four tens into a fourty ***************/
+START_TEST(convert_to_subtractive_notation_fourty) {
+   RomanNumber number = rnEncode("XXXXXIII");
+   ck_assert_str_eq(rnPrint(rnConvertToSubtractiveNotation(number)), "XLXIII");
+} END_TEST
+
+/* Convert a value with a five-hundred and four one-hundreds into four-hund */
+START_TEST(convert_to_subtractive_notation_nine_hundred) {
+   RomanNumber number = rnEncode("DCCCCXII");
+   ck_assert_str_eq(rnPrint(rnConvertToSubtractiveNotation(number)), "CMXII");
+} END_TEST
+
+/************** Convert four one-hundreds into a four-houndred **************/
+START_TEST(convert_to_subtractive_notation_four_hundred) {
+   RomanNumber number = rnEncode("CCCCLXII");
+   ck_assert_str_eq(rnPrint(rnConvertToSubtractiveNotation(number)), "CDLXII");
+} END_TEST
+
+/****************** Convert using multiple rules from above *****************/
+START_TEST(convert_to_subtractive_notation_complex_value) {
+   RomanNumber number = rnEncode("DCCCCLXXXXVIIII");
+   ck_assert_str_eq(rnPrint(rnConvertToSubtractiveNotation(number)), "CMXCIX");
+} END_TEST
+
+/****************************************************************************/
 Suite * roman_number_math_suite(void) {
    Suite *s;
    TCase *tc_digits, *tc_numbers, *tc_library;
@@ -447,6 +496,15 @@ Suite * roman_number_math_suite(void) {
    tcase_add_test(tc_library, simplify_value_five_one_hundred_equals_five_hundred);
    tcase_add_test(tc_library, simplify_value_two_five_hundred_equals_one_thousand);
    tcase_add_test(tc_library, simplify_value_complex_value);
+
+   tcase_add_test(tc_library, convert_to_subtractive_notation_single_digit);
+   tcase_add_test(tc_library, convert_to_subtractive_notation_nine);
+   tcase_add_test(tc_library, convert_to_subtractive_notation_four);
+   tcase_add_test(tc_library, convert_to_subtractive_notation_ninety);
+   tcase_add_test(tc_library, convert_to_subtractive_notation_fourty);
+   tcase_add_test(tc_library, convert_to_subtractive_notation_nine_hundred);
+   tcase_add_test(tc_library, convert_to_subtractive_notation_four_hundred);
+   tcase_add_test(tc_library, convert_to_subtractive_notation_complex_value);
 
    suite_add_tcase(s, tc_library);
 

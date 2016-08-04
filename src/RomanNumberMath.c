@@ -169,3 +169,53 @@ RomanNumber rnSimplifyDigits(RomanNumber number) {
 
    return returnValue;
 }
+
+RomanNumber rnConvertToSubtractiveNotation(RomanNumber number) {
+   RomanNumber returnValue;
+   int counts[NUMDIGITS], subtractive[NUMDIGITS], idx, idx2;
+
+   returnValue.Size = 0;
+
+   for (idx = 0; idx < NUMDIGITS; idx++) {
+      counts[idx] = 0;
+      subtractive[idx] = 0;
+
+      for (idx2 = 0; idx2 < number.Size; idx2++)
+         if (number.Digit[idx2].Symbol == allowedDigit[idx])
+            counts[idx]++;
+   }
+
+   for (idx = 2; idx < NUMDIGITS; idx += 2) {
+      if ((counts[idx-2] >= (nextDigit[idx-2]-1)) && (counts[idx-1] >= (nextDigit[idx-1]-1))) {
+         subtractive[idx] = 1;
+         counts[idx-2] -= (nextDigit[idx-2]-1);
+         counts[idx-1] -= (nextDigit[idx-1]-1);
+      }
+   
+      if (counts[idx-2] >= (nextDigit[idx-2]-1)) {
+         subtractive[idx-1] = 1;
+         counts[idx-2] -= (nextDigit[idx-2]-1);
+      }
+   }
+   
+   for (idx = (NUMDIGITS-1); idx >= 0; idx--) {
+      RomanDigit digit = {allowedDigit[idx], digitValue[idx]};
+      int modifierOffset = (idx % 2) == 0 ? 2 : 1;
+      RomanDigit modifier = {allowedDigit[idx-modifierOffset], digitValue[idx-modifierOffset]};
+   
+      int repeat = counts[idx];
+      while(repeat) {
+         returnValue.Digit[returnValue.Size] = digit;
+         returnValue.Size++;
+         repeat--;
+      }
+   
+      if (subtractive[idx] > 0) {
+         returnValue.Digit[returnValue.Size] = modifier;
+         returnValue.Digit[returnValue.Size+1] = digit;
+         returnValue.Size += 2;
+      }
+   }
+
+   return returnValue;
+}
