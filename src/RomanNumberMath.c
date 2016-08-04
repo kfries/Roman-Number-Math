@@ -219,3 +219,16 @@ RomanNumber rnConvertToSubtractiveNotation(RomanNumber number) {
 
    return returnValue;
 }
+
+RomanNumber rnAdd(RomanNumber number1, RomanNumber number2) {
+   return rnConvertToSubtractiveNotation(
+             rnSimplifyDigits(
+                rnSortDigits(
+                   rnConcatinate(
+                      rnRemoveSubtractiveNotation(number1),
+                      rnRemoveSubtractiveNotation(number2)
+                   )
+                )
+             )
+          );
+}

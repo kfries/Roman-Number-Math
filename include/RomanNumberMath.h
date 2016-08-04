@@ -11,12 +11,18 @@ typedef struct {
    RomanDigit Digit[100];
 } RomanNumber;
 
+/* Number Instantiation and Validation Functions */
 RomanDigit rdEncode(char);
 RomanNumber rnEncode(char *);
 
+/* Core Mathmatical Functions */
+RomanNumber rnAdd(RomanNumber, RomanNumber);
+
+/* Debugging and Validation Helper Functions */
 char *rnPrint(RomanNumber);
 uint32_t rnValue(RomanNumber);
 
+/* Algorithm Implementation Functions */
 RomanNumber rnSortDigits(RomanNumber);
 RomanNumber rnConcatinate(RomanNumber, RomanNumber);
 RomanNumber rnRemoveSubtractiveNotation(RomanNumber);

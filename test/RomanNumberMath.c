@@ -424,10 +424,38 @@ START_TEST(convert_to_subtractive_notation_complex_value) {
    ck_assert_str_eq(rnPrint(rnConvertToSubtractiveNotation(number)), "CMXCIX");
 } END_TEST
 
+/*****************************************************************************
+ * Main Function Calls (Core)
+ * 
+ * This is the actual Add and Subtract Calls
+ *
+ ****************************************************************************/
+
+/****************************************************************************/
+START_TEST(one_plus_one_equals_two) {
+   RomanNumber number1 = rnEncode("I");
+   RomanNumber number2 = rnEncode("I");
+   ck_assert_str_eq(rnPrint(rnAdd(number1, number2)), "I");
+} END_TEST
+
+/****************************************************************************/
+START_TEST(two_plus_two_equals_four) {
+   RomanNumber number1 = rnEncode("II");
+   RomanNumber number2 = rnEncode("II");
+   ck_assert_str_eq(rnPrint(rnAdd(number1, number2)), "IV");
+} END_TEST
+
+/****************************************************************************/
+START_TEST(add_two_complex_numbers) {
+   RomanNumber number1 = rnEncode("XLVI");
+   RomanNumber number2 = rnEncode("LIV");
+   ck_assert_str_eq(rnPrint(rnAdd(number1, number2)), "C");
+} END_TEST
+
 /****************************************************************************/
 Suite * roman_number_math_suite(void) {
    Suite *s;
-   TCase *tc_digits, *tc_numbers, *tc_library;
+   TCase *tc_digits, *tc_numbers, *tc_library, *tc_core;
 
    s = suite_create("RomanNumberMath");
 
@@ -507,6 +535,13 @@ Suite * roman_number_math_suite(void) {
    tcase_add_test(tc_library, convert_to_subtractive_notation_complex_value);
 
    suite_add_tcase(s, tc_library);
+
+   /* Testing Creating of Roman Digits Mathmatical Functions*/
+   tc_core = tcase_create("Core");
+
+   tcase_add_test(tc_core, one_plus_one_equals_two);
+   tcase_add_test(tc_core, two_plus_two_equals_four);
+   tcase_add_test(tc_core, add_two_complex_numbers);
 
    return s;
 }
