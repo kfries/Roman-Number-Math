@@ -262,3 +262,42 @@ void rnRemoveCommonDigits(RomanNumber *number1, RomanNumber *number2) {
    }
 }
 
+RomanNumber rnExpandValue(RomanNumber number1, RomanNumber number2) {
+   RomanDigit largestInSecond, deletedDigit, replacementDigit;
+   RomanNumber strippedFirstNumber, replacementNumber;
+   int idx, idx2, stripped;
+
+   largestInSecond = number2.Digit[0];
+
+   for (idx = (number1.Size-1); idx >= 0; idx--) {
+      if (number1.Digit[idx].Value > largestInSecond.Value) {
+         deletedDigit = number1.Digit[idx];
+         break;
+      }
+   }
+
+
+   stripped = 0;
+   strippedFirstNumber.Size = 0;
+   for (idx = 0; idx < number1.Size; idx++) {
+      if ((stripped == 0) && (number1.Digit[idx].Symbol == deletedDigit.Symbol)) {
+         stripped = 1;
+      } else {
+         strippedFirstNumber.Digit[strippedFirstNumber.Size++] = number1.Digit[idx];
+      }
+   }
+
+   replacementNumber.Size = 0;
+   for (idx = 0; idx < NUMDIGITS; idx++) {
+      if (allowedDigit[idx] == deletedDigit.Symbol) {
+         replacementDigit.Symbol = allowedDigit[idx-1];
+         replacementDigit.Value = digitValue[idx-1];
+
+         for (idx2 = 0; idx2 < nextDigit[idx-1]; idx2++) {
+            replacementNumber.Digit[replacementNumber.Size++] = replacementDigit;
+         }
+      }
+   }
+
+   return rnSortDigits(rnConcatinate(strippedFirstNumber, replacementNumber));
+}

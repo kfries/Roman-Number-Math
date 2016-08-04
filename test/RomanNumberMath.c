@@ -464,6 +464,34 @@ START_TEST(remove_common_digits_where_no_digits_in_common) {
    ck_assert_str_eq(rnPrint(number2), "VI");
 } END_TEST
 
+/*********** Expand Symbol In First Value: Second Value one lower ***********/
+START_TEST(expand_symbol_first_next_value_higher_than_second) {
+   RomanNumber number1 = rnEncode("X");
+   RomanNumber number2 = rnEncode("V");
+   ck_assert_str_eq(rnPrint(rnExpandValue(number1, number2)), "VV");
+} END_TEST
+
+/***** Expand Symbol In First Value: Second Value several symbols lower *****/
+START_TEST(expand_symbol_first_multiple_values_higher_than_second) {
+   RomanNumber number1 = rnEncode("X");
+   RomanNumber number2 = rnEncode("II");
+   ck_assert_str_eq(rnPrint(rnExpandValue(number1, number2)), "VV");
+} END_TEST
+
+/************* Expand Symbol In First Value: Extra Digits on End ************/
+START_TEST(expand_symbol_with_extra_digits_on_end) {
+   RomanNumber number1 = rnEncode("LII");
+   RomanNumber number2 = rnEncode("XXI");
+   ck_assert_str_eq(rnPrint(rnExpandValue(number1, number2)), "XXXXXII");
+} END_TEST
+
+/********** Expand Symbol In First Value: Extra Digits on Both Ends *********/
+START_TEST(expand_symbol_with_extra_digits_on_both_ends) {
+   RomanNumber number1 = rnEncode("DLII");
+   RomanNumber number2 = rnEncode("XXI");
+   ck_assert_str_eq(rnPrint(rnExpandValue(number1, number2)), "DXXXXXII");
+} END_TEST
+
 
 /*****************************************************************************
  * Main Function Calls (Core)
@@ -579,6 +607,11 @@ Suite * roman_number_math_suite(void) {
    tcase_add_test(tc_library, remove_common_digits_where_second_included_in_first);
    tcase_add_test(tc_library, remove_common_digits_where_second_partly_in_first);
    tcase_add_test(tc_library, remove_common_digits_where_no_digits_in_common);
+
+   tcase_add_test(tc_library, expand_symbol_first_next_value_higher_than_second);
+   tcase_add_test(tc_library, expand_symbol_first_multiple_values_higher_than_second);
+   tcase_add_test(tc_library, expand_symbol_with_extra_digits_on_end);
+   tcase_add_test(tc_library, expand_symbol_with_extra_digits_on_both_ends);
 
    suite_add_tcase(s, tc_library);
 
